@@ -1,7 +1,30 @@
 import express from 'express';
+import dotenv from 'dotenv'
+import cookieParser from 'cookie-parser';
 
+import authRoutes from './routes/auth.route.js'
+import messageRoutes from './routes/message.route.js'
+import {connectDB} from './lib/db.js';
+
+dotenv.config();
 const app = express();
+app.use(express.json());
+app.use(cookieParser());
 
-app.listen(5001,()=>{
-    console.log('server is running on port 5001');
-})
+app.use("/api/auth", authRoutes);
+app.use("/api/message", messageRoutes);
+const PORT = process.env.PORT;
+
+const startServer = async () => {
+    try {
+        await connectDB();
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    } catch (err) {
+        console.error('Failed to connect to the database:', err);
+        process.exit(1); 
+    }
+};
+
+startServer();
