@@ -1,5 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary';
-
+import dotenv from 'dotenv';
+dotenv.config();
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
     api_key:process.env.CLOUDINARY_API_KEY,
@@ -9,6 +10,7 @@ cloudinary.config({
 //accepts base64 image
 export async function uploadImage(imageString){
     try {
+        console.log(imageString);
         const results = await cloudinary.uploader.upload(imageString);
         return results;  
     } catch (error) {
