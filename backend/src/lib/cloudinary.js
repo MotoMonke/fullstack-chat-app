@@ -10,7 +10,6 @@ cloudinary.config({
 //accepts base64 image
 export async function uploadImage(imageString){
     try {
-        console.log(imageString);
         const results = await cloudinary.uploader.upload(imageString);
         return results;  
     } catch (error) {
