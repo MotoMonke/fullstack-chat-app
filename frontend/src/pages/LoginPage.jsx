@@ -9,10 +9,14 @@ export default function LoginPage(){
         email:"",
         password:"",
     })
-    const {login,isLoggingIn} = useAuthStore();
+    const {login,isLoggingIn,lazyLogin} = useAuthStore();
     const handleSubmit = async(e) => {
         e.preventDefault();
         login(formData);
+    }
+    const handleGuestFormSubit = async(e) => {
+      e.preventDefault();
+      lazyLogin();
     }
     return(
     <div className="h-screen grid lg:grid-cols-2">
@@ -93,7 +97,11 @@ export default function LoginPage(){
               )}
             </button>
           </form>
-
+          <form onSubmit={handleGuestFormSubit}>
+              <button type="submit" className="cursor-pointer underline hover:text-blue-500 active:text-blue-300 w-full" disabled={isLoggingIn}>
+                Sign in as guest
+              </button>
+          </form>    
           <div className="text-center">
             <p className="text-base-content/60">
               Don&apos;t have an account?{" "}

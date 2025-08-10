@@ -45,9 +45,10 @@ export const login = async(req,res) => {
             generateToken(user._id,res);
             return res.status(200).json({
                 _id:user._id,
-                fullName:user.fullname,
+                fullname:user.fullname,
                 email:user.email,
                 profilePic:user.profilePic,
+                createdAt:user.createdAt
             });
         }else{
             return res.status(400).json({message:"Invalid credentials"});

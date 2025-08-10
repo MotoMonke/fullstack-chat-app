@@ -51,6 +51,20 @@ export const useAuthStore = create((set,get) => ({
         }
     },
 
+    lazyLogin: async()=>{
+        try {
+            set({ isLoggingIn: true });
+            const res = await axiosInstance.post('/auth/login', {email:"email@email.com",password:"123456",});
+            set({authUser:res.data});
+            toast.success('Logged in successfully');
+            get().connectSocket();
+        } catch (error) {
+            toast.error(error.response?.data?.message || 'Login failed');
+        } finally {
+            set({ isLoggingIn: false });
+        }
+    },
+
     logout: async() => {
         try {
             await axiosInstance.post('/auth/logout');
